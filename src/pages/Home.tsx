@@ -171,7 +171,7 @@ function ResultCard({
           )}
 
           <div className="flex items-center gap-4 font-mono-custom text-xs mb-4">
-            <span className="border-brutal px-2 py-1">EP: {result.episode ?? '—'}</span>
+            <span className="border-brutal px-2 py-1">{t('results.episode')}: {result.episode ?? '—'}</span>
             <span className="border-brutal px-2 py-1">{formatTimeRange(result.from, result.to)}</span>
           </div>
 
@@ -190,7 +190,7 @@ function ResultCard({
               className="btn-brutal btn-brutal-orange text-xs flex items-center gap-2 py-2 px-3"
             >
               <BookmarkPlus size={12} />
-              SAVE
+              {t('results.saveWatchlist')}
             </button>
           </div>
         </div>
@@ -464,7 +464,7 @@ export function Home() {
               {quota && (
                 <div className="absolute top-0 right-0 z-10">
                   <div className="border-brutal bg-black text-[#FF4D00] px-3 py-1.5 font-mono-custom text-xs font-bold">
-                    {quota.remaining} SEARCHES LEFT
+                    {t('quota.remaining', { count: quota.remaining })}
                   </div>
                 </div>
               )}
@@ -476,9 +476,9 @@ export function Home() {
                 onClick={() => fileInputRef.current?.click()}
               >
                 <Upload size={48} className="mx-auto mb-4 text-black" />
-                <p className="font-display text-2xl md:text-3xl mb-2">DROP IMAGE</p>
+                <p className="font-display text-2xl md:text-3xl mb-2">{t('hero.dropzone').split(',')[0].toUpperCase()}</p>
                 <p className="font-mono-custom text-xs text-black/60">
-                  CLICK • PASTE (CTRL+V) • DRAG & DROP
+                  {t('hero.dropzone')}
                 </p>
                 <p className="font-mono-custom text-[10px] text-black/40 mt-2">
                   JPEG, PNG, WEBP, GIF • MAX 25MB
@@ -550,10 +550,10 @@ export function Home() {
                 onChange={(e) => setOptions(prev => ({ ...prev, cutBorders: e.target.checked }))}
                 className="checkbox-brutal"
               />
-              TRIM BORDERS
+              {t('options.cutBorders')}
             </label>
             <div className="flex items-center gap-2">
-              <span className="font-mono-custom text-xs font-bold uppercase">ANILIST ID:</span>
+              <span className="font-mono-custom text-xs font-bold uppercase">{t('options.anilistId')}:</span>
               <input
                 type="number"
                 value={options.anilistId || ''}
@@ -574,18 +574,18 @@ export function Home() {
               {isLoading ? (
                 <>
                   <Loader2 size={18} className="animate-spin" />
-                  SEARCHING...
+                  {t('options.searching')}
                 </>
               ) : (
                 <>
                   <Search size={18} />
-                  SEARCH NOW
+                  {t('options.search')}
                 </>
               )}
             </button>
             {fromCache && results && (
               <span className="font-mono-custom text-xs font-bold border-brutal px-3 py-1 bg-black text-[#FF4D00]">
-                ✓ FROM CACHE
+                ✓ {t('results.fromCache')}
               </span>
             )}
           </div>
@@ -641,7 +641,7 @@ export function Home() {
             <div className="mt-12">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-3 h-3 bg-black" />
-                <span className="font-mono-custom text-xs font-bold uppercase tracking-widest">// RECENT</span>
+                <span className="font-mono-custom text-xs font-bold uppercase tracking-widest">// {t('hero.recentSearches')}</span>
               </div>
               <div className="flex gap-3">
                 {recentSearches.map(s => (
@@ -678,11 +678,11 @@ export function Home() {
       <footer className="bg-[#FF4D00] border-t-2 border-black px-4 sm:px-8 py-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="font-mono-custom text-xs text-black/60">
-            © 2026 TRACENIME — ALL RIGHTS RESERVED
+            © 2026 TRACENIME
           </div>
           <div className="flex items-center gap-6 font-mono-custom text-xs text-black/60">
-            <span>POWERED BY TRACE.MOE & ANILIST</span>
-            <span>NOT AFFILIATED</span>
+            <span>{t('about.credits')}</span>
+            <span>{t('about.notAffiliated')}</span>
           </div>
         </div>
       </footer>

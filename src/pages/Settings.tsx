@@ -70,10 +70,10 @@ export function Settings() {
               <Globe size={20} className="text-[#FF4D00]" />
               <h2 className="font-display text-lg">{t('settings.language')}</h2>
             </div>
-            <div className="flex gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <button
                 onClick={() => setLanguage('en')}
-                className={`flex-1 btn-brutal text-sm ${
+                className={`btn-brutal text-sm ${
                   language === 'en'
                     ? 'bg-[#FF4D00] border-[#FF4D00] text-black'
                     : 'border-white text-white hover:bg-white hover:text-black'
@@ -83,7 +83,7 @@ export function Settings() {
               </button>
               <button
                 onClick={() => setLanguage('id')}
-                className={`flex-1 btn-brutal text-sm ${
+                className={`btn-brutal text-sm ${
                   language === 'id'
                     ? 'bg-[#FF4D00] border-[#FF4D00] text-black'
                     : 'border-white text-white hover:bg-white hover:text-black'
@@ -91,26 +91,46 @@ export function Settings() {
               >
                 BAHASA INDONESIA
               </button>
+              <button
+                onClick={() => setLanguage('zh')}
+                className={`btn-brutal text-sm ${
+                  language === 'zh'
+                    ? 'bg-[#FF4D00] border-[#FF4D00] text-black'
+                    : 'border-white text-white hover:bg-white hover:text-black'
+                }`}
+              >
+                中文
+              </button>
+              <button
+                onClick={() => setLanguage('ja')}
+                className={`btn-brutal text-sm ${
+                  language === 'ja'
+                    ? 'bg-[#FF4D00] border-[#FF4D00] text-black'
+                    : 'border-white text-white hover:bg-white hover:text-black'
+                }`}
+              >
+                日本語
+              </button>
             </div>
           </div>
 
           {/* Data */}
           <div className="border-brutal-white p-6">
-            <h2 className="font-display text-lg mb-6">DATA MANAGEMENT</h2>
+            <h2 className="font-display text-lg mb-6">{t('settings.dataManagement') || 'DATA MANAGEMENT'}</h2>
             <div className="space-y-3">
               <button
                 onClick={handleExport}
                 className="w-full btn-brutal border-white text-white hover:bg-white hover:text-black flex items-center justify-center gap-3"
               >
                 <Download size={16} />
-                EXPORT DATA
+                {t('settings.export')}
               </button>
               <button
                 onClick={() => fileInputRef.current?.click()}
                 className="w-full btn-brutal border-white text-white hover:bg-white hover:text-black flex items-center justify-center gap-3"
               >
                 <Upload size={16} />
-                IMPORT DATA
+                {t('settings.import')}
               </button>
               <input
                 ref={fileInputRef}
@@ -131,7 +151,7 @@ export function Settings() {
           <div className="border-brutal-white p-6">
             <div className="flex items-center gap-3 mb-6">
               <Trash2 size={20} className="text-red-400" />
-              <h2 className="font-display text-lg">DANGER ZONE</h2>
+              <h2 className="font-display text-lg">{t('settings.clearData')}</h2>
             </div>
             {!showClearConfirm ? (
               <button
@@ -148,13 +168,13 @@ export function Settings() {
                     onClick={handleClearAll}
                     className="btn-brutal text-xs bg-red-400 border-red-400 text-black hover:bg-black hover:text-red-400"
                   >
-                    CONFIRM DELETE
+                    {t('misc.confirm') || 'CONFIRM'}
                   </button>
                   <button
                     onClick={() => setShowClearConfirm(false)}
                     className="btn-brutal text-xs border-white text-white hover:bg-white hover:text-black"
                   >
-                    CANCEL
+                    {t('misc.cancel')}
                   </button>
                 </div>
               </div>

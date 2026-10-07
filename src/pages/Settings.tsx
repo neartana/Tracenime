@@ -27,14 +27,10 @@ export function Settings() {
       const text = await file.text();
       const json = JSON.parse(text);
       const result = await importData(json);
-      setImportResult(t('settings.importSuccess', {
-        added: result.added,
-        updated: result.updated,
-        skipped: result.skipped,
-      }));
+      setImportResult(`IMPORTED: ${result.added} NEW, ${result.updated} UPDATED, ${result.skipped} SKIPPED`);
       setTimeout(() => setImportResult(null), 5000);
     } catch {
-      setImportResult('Invalid export file.');
+      setImportResult('INVALID EXPORT FILE');
       setTimeout(() => setImportResult(null), 5000);
     }
     e.target.value = '';
@@ -47,108 +43,125 @@ export function Settings() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-2 h-2 rounded-full bg-[#FF6B50] pulse-dot" />
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight-custom">{t('settings.title')}</h1>
-      </div>
-
-      <div className="space-y-6">
-        {/* Language */}
-        <div className="bg-[#111] rounded-3xl p-5">
+    <div className="min-h-screen bg-[#FF4D00]">
+      {/* Header */}
+      <section className="px-4 sm:px-8 pt-32 pb-12">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
-            <Globe size={18} className="text-[#FF6B50]" />
-            <h2 className="text-white font-medium">{t('settings.language')}</h2>
+            <div className="w-3 h-3 bg-black" />
+            <span className="font-mono-custom text-xs font-bold uppercase tracking-widest">// CONFIGURATION</span>
           </div>
-          <div className="flex gap-3">
-            <button
-              onClick={() => setLanguage('en')}
-              className={`flex-1 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                language === 'en'
-                  ? 'bg-[#FF6B50] text-black'
-                  : 'bg-[#1a1a1a] text-[#888] hover:text-white'
-              }`}
-            >
-              English
-            </button>
-            <button
-              onClick={() => setLanguage('id')}
-              className={`flex-1 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                language === 'id'
-                  ? 'bg-[#FF6B50] text-black'
-                  : 'bg-[#1a1a1a] text-[#888] hover:text-white'
-              }`}
-            >
-              Bahasa Indonesia
-            </button>
-          </div>
+          <h1
+            className="font-display text-black mb-8"
+            style={{ fontSize: 'clamp(3rem, 12vw, 12rem)' }}
+          >
+            SETTINGS
+          </h1>
+          <div className="border-t-2 border-black" />
         </div>
+      </section>
 
-        {/* Data */}
-        <div className="bg-[#111] rounded-3xl p-5">
-          <h2 className="text-white font-medium mb-4">Data</h2>
-          <div className="space-y-3">
-            <button
-              onClick={handleExport}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1a1a1a] hover:bg-[#222] text-[#888] hover:text-white transition-colors"
-            >
-              <Download size={18} />
-              <span className="text-sm">{t('settings.export')}</span>
-            </button>
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1a1a1a] hover:bg-[#222] text-[#888] hover:text-white transition-colors"
-            >
-              <Upload size={18} />
-              <span className="text-sm">{t('settings.import')}</span>
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".json"
-              className="hidden"
-              onChange={handleImport}
-            />
-            {importResult && (
-              <p className="text-sm text-[#888] px-4 py-2 bg-[#1a1a1a] rounded-xl">{importResult}</p>
+      {/* Content */}
+      <section className="bg-black text-white px-4 sm:px-8 py-12">
+        <div className="max-w-3xl mx-auto space-y-8">
+          {/* Language */}
+          <div className="border-brutal-white p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <Globe size={20} className="text-[#FF4D00]" />
+              <h2 className="font-display text-lg">{t('settings.language')}</h2>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setLanguage('en')}
+                className={`flex-1 btn-brutal text-sm ${
+                  language === 'en'
+                    ? 'bg-[#FF4D00] border-[#FF4D00] text-black'
+                    : 'border-white text-white hover:bg-white hover:text-black'
+                }`}
+              >
+                ENGLISH
+              </button>
+              <button
+                onClick={() => setLanguage('id')}
+                className={`flex-1 btn-brutal text-sm ${
+                  language === 'id'
+                    ? 'bg-[#FF4D00] border-[#FF4D00] text-black'
+                    : 'border-white text-white hover:bg-white hover:text-black'
+                }`}
+              >
+                BAHASA INDONESIA
+              </button>
+            </div>
+          </div>
+
+          {/* Data */}
+          <div className="border-brutal-white p-6">
+            <h2 className="font-display text-lg mb-6">DATA MANAGEMENT</h2>
+            <div className="space-y-3">
+              <button
+                onClick={handleExport}
+                className="w-full btn-brutal border-white text-white hover:bg-white hover:text-black flex items-center justify-center gap-3"
+              >
+                <Download size={16} />
+                EXPORT DATA
+              </button>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full btn-brutal border-white text-white hover:bg-white hover:text-black flex items-center justify-center gap-3"
+              >
+                <Upload size={16} />
+                IMPORT DATA
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json"
+                className="hidden"
+                onChange={handleImport}
+              />
+              {importResult && (
+                <div className="border-brutal-white bg-white/5 p-4 font-mono-custom text-xs text-[#FF4D00]">
+                  {importResult}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Clear Data */}
+          <div className="border-brutal-white p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <Trash2 size={20} className="text-red-400" />
+              <h2 className="font-display text-lg">DANGER ZONE</h2>
+            </div>
+            {!showClearConfirm ? (
+              <button
+                onClick={() => setShowClearConfirm(true)}
+                className="w-full btn-brutal border-red-400 text-red-400 hover:bg-red-400 hover:text-black"
+              >
+                {t('settings.clearData')}
+              </button>
+            ) : (
+              <div className="space-y-4">
+                <p className="font-mono-custom text-xs text-white/80">{t('settings.clearConfirm')}</p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleClearAll}
+                    className="btn-brutal text-xs bg-red-400 border-red-400 text-black hover:bg-black hover:text-red-400"
+                  >
+                    CONFIRM DELETE
+                  </button>
+                  <button
+                    onClick={() => setShowClearConfirm(false)}
+                    className="btn-brutal text-xs border-white text-white hover:bg-white hover:text-black"
+                  >
+                    CANCEL
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>
-
-        {/* Clear Data */}
-        <div className="bg-[#111] rounded-3xl p-5">
-          <div className="flex items-center gap-3 mb-4">
-            <Trash2 size={18} className="text-red-400" />
-            <h2 className="text-white font-medium">{t('settings.clearData')}</h2>
-          </div>
-          {!showClearConfirm ? (
-            <button
-              onClick={() => setShowClearConfirm(true)}
-              className="w-full px-4 py-3 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 text-sm font-medium transition-colors"
-            >
-              {t('settings.clearData')}
-            </button>
-          ) : (
-            <div className="space-y-3">
-              <p className="text-sm text-[#888]">{t('settings.clearConfirm')}</p>
-              <div className="flex gap-2">
-                <button
-                  onClick={handleClearAll}
-                  className="px-4 py-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-400 text-sm font-medium transition-colors"
-                >
-                  {t('misc.delete')}
-                </button>
-                <button
-                  onClick={() => setShowClearConfirm(false)}
-                  className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-[#888] text-sm transition-colors"
-                >
-                  {t('misc.cancel')}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      </section>
     </div>
   );
 }

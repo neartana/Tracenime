@@ -3,7 +3,7 @@ import { useI18n } from '../lib/i18n';
 import { getRecentSearches, deleteSearch, clearAllSearches } from '../lib/db';
 import type { SearchRecord } from '../lib/types';
 import { formatTimeRange } from '../lib/trace';
-import { Trash2, AlertCircle } from 'lucide-react';
+import { Trash2, AlertCircle, ArrowUpRight } from 'lucide-react';
 
 export function History() {
   const { t } = useI18n();
@@ -26,94 +26,124 @@ export function History() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-[#FF6B50] pulse-dot" />
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight-custom">{t('history.title')}</h1>
-        </div>
-        {searches.length > 0 && (
-          <button
-            onClick={() => setShowConfirm(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm text-[#888] hover:text-red-400 hover:bg-red-500/10 transition-colors"
-          >
-            <Trash2 size={14} />
-            {t('history.deleteAll')}
-          </button>
-        )}
-      </div>
-
-      {showConfirm && (
-        <div className="bg-[#111] rounded-2xl p-4 mb-6 flex items-center justify-between">
-          <p className="text-sm text-[#888]">{t('history.confirmDelete')}</p>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setShowConfirm(false)}
-              className="px-3 py-1.5 rounded-lg text-sm text-[#888] hover:text-white transition-colors"
-            >
-              {t('misc.cancel')}
-            </button>
-            <button
-              onClick={handleClearAll}
-              className="px-3 py-1.5 rounded-lg text-sm bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors"
-            >
-              {t('misc.delete')}
-            </button>
+    <div className="min-h-screen bg-[#FF4D00]">
+      {/* Header */}
+      <section className="px-4 sm:px-8 pt-32 pb-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-3 h-3 bg-black" />
+            <span className="font-mono-custom text-xs font-bold uppercase tracking-widest">// ARCHIVE</span>
           </div>
+          <h1
+            className="font-display text-black mb-8"
+            style={{ fontSize: 'clamp(3rem, 12vw, 12rem)' }}
+          >
+            HISTORY
+          </h1>
+          <div className="border-t-2 border-black" />
         </div>
-      )}
+      </section>
 
-      {searches.length === 0 ? (
-        <div className="text-center py-16">
-          <AlertCircle size={48} className="mx-auto text-[#333] mb-4" />
-          <p className="text-[#666]">{t('history.empty')}</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {searches.map((search, index) => (
-            <div
-              key={search.id}
-              className={`bg-[#111] hover:bg-[#161616] rounded-3xl p-4 transition-colors group ${
-                index % 2 === 1 ? 'md:mt-8' : ''
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                {search.thumbnail && (
-                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#1a1a1a] shrink-0 thumbnail-hover">
-                    <img src={search.thumbnail} alt="" className="w-full h-full object-cover" />
-                  </div>
-                )}
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-medium text-sm truncate">
-                    {search.top?.title.romaji || search.top?.title.english || 'Unknown'}
-                  </h3>
-                  {search.top && (
-                    <div className="flex items-center gap-2 mt-1 text-xs text-[#888]">
-                      <span>Ep. {search.top.episode ?? '—'}</span>
-                      <span>{formatTimeRange(search.top.from, search.top.to)}</span>
-                      <span className={`${
-                        search.top.similarity >= 0.9 ? 'text-green-400' :
-                        search.top.similarity >= 0.8 ? 'text-yellow-400' : 'text-red-400'
-                      }`}>
-                        {Math.round(search.top.similarity * 100)}%
-                      </span>
-                    </div>
-                  )}
-                  <p className="text-[#666] text-xs mt-1">
-                    {new Date(search.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
+      {/* Content */}
+      <section className="bg-black text-white px-4 sm:px-8 py-12">
+        <div className="max-w-7xl mx-auto">
+          {searches.length > 0 && (
+            <div className="flex items-center justify-between mb-8">
+              <span className="font-mono-custom text-xs text-white/60">
+                {searches.length} ENTRIES
+              </span>
+              <button
+                onClick={() => setShowConfirm(true)}
+                className="btn-brutal text-xs flex items-center gap-2 border-white text-white hover:bg-white hover:text-black"
+              >
+                <Trash2 size={12} />
+                CLEAR ALL
+              </button>
+            </div>
+          )}
+
+          {showConfirm && (
+            <div className="border-brutal-white bg-white/5 p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <p className="font-mono-custom text-xs text-white/80">{t('history.confirmDelete')}</p>
+              <div className="flex gap-2">
                 <button
-                  onClick={() => handleDelete(search.id)}
-                  className="p-1.5 rounded-full opacity-0 group-hover:opacity-100 hover:bg-white/10 text-[#888] hover:text-red-400 transition-all"
+                  onClick={() => setShowConfirm(false)}
+                  className="btn-brutal text-xs border-white text-white hover:bg-white hover:text-black"
                 >
-                  <Trash2 size={14} />
+                  {t('misc.cancel')}
+                </button>
+                <button
+                  onClick={handleClearAll}
+                  className="btn-brutal text-xs bg-[#FF4D00] border-[#FF4D00] text-black hover:bg-black hover:text-[#FF4D00]"
+                >
+                  {t('misc.delete')}
                 </button>
               </div>
             </div>
-          ))}
+          )}
+
+          {searches.length === 0 ? (
+            <div className="text-center py-24">
+              <AlertCircle size={48} className="mx-auto text-white/20 mb-4" />
+              <p className="font-mono-custom text-sm text-white/40">{t('history.empty')}</p>
+            </div>
+          ) : (
+            <div>
+              {searches.map((search, index) => (
+                <div
+                  key={search.id}
+                  className="service-item group flex items-center gap-4 px-4"
+                >
+                  {/* Index */}
+                  <span className="font-mono-custom text-[#FF4D00] text-sm font-bold w-8 shrink-0">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+
+                  {/* Thumbnail */}
+                  {search.thumbnail && (
+                    <div className="w-16 h-16 border-brutal-white bg-black overflow-hidden shrink-0">
+                      <img src={search.thumbnail} alt="" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />
+                    </div>
+                  )}
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0 service-title">
+                    <h3 className="font-display text-lg md:text-xl truncate">
+                      {search.top?.title.romaji || search.top?.title.english || 'UNKNOWN'}
+                    </h3>
+                    <div className="flex items-center gap-3 mt-1 font-mono-custom text-[10px] text-white/60">
+                      <span>EP.{search.top?.episode ?? '—'}</span>
+                      <span>{search.top ? formatTimeRange(search.top.from, search.top.to) : ''}</span>
+                      <span className={
+                        (search.top?.similarity ?? 0) >= 0.9 ? 'text-green-400' :
+                        (search.top?.similarity ?? 0) >= 0.8 ? 'text-yellow-400' : 'text-red-400'
+                      }>
+                        {search.top ? `${Math.round(search.top.similarity * 100)}%` : ''}
+                      </span>
+                    </div>
+                    <p className="font-mono-custom text-[10px] text-white/40 mt-1">
+                      {new Date(search.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      onClick={() => handleDelete(search.id)}
+                      className="p-2 border-brutal-white text-white/40 hover:text-[#FF4D00] hover:border-[#FF4D00] transition-colors opacity-0 group-hover:opacity-100"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                    <div className="service-arrow">
+                      <ArrowUpRight size={24} className="text-[#FF4D00]" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
+      </section>
     </div>
   );
 }

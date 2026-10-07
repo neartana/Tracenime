@@ -6,73 +6,94 @@ export function About() {
   const { t } = useI18n();
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-2 h-2 rounded-full bg-[#FF6B50] pulse-dot" />
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight-custom">{t('about.title')}</h1>
-      </div>
+    <div className="min-h-screen bg-[#FF4D00]">
+      {/* Header */}
+      <section className="px-4 sm:px-8 pt-32 pb-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-3 h-3 bg-black" />
+            <span className="font-mono-custom text-xs font-bold uppercase tracking-widest">// INFORMATION</span>
+          </div>
+          <h1
+            className="font-display text-black mb-8"
+            style={{ fontSize: 'clamp(3rem, 12vw, 12rem)' }}
+          >
+            ABOUT
+          </h1>
+          <div className="border-t-2 border-black" />
+        </div>
+      </section>
 
-      <div className="space-y-6">
-        {/* Description */}
-        <div className="bg-[#111] rounded-3xl p-6">
-          <div className="flex items-start gap-3 mb-4">
-            <Info size={20} className="text-[#FF6B50] mt-0.5 shrink-0" />
-            <div>
-              <h2 className="text-white font-medium mb-2">Tracenime</h2>
-              <p className="text-[#888] text-sm leading-relaxed">{t('about.description')}</p>
+      {/* Content */}
+      <section className="bg-black text-white px-4 sm:px-8 py-12">
+        <div className="max-w-3xl mx-auto space-y-8">
+          {/* Description */}
+          <div className="border-brutal-white p-6">
+            <div className="flex items-start gap-4">
+              <Info size={24} className="text-[#FF4D00] mt-1 shrink-0" />
+              <div>
+                <h2 className="font-display text-xl mb-4">TRACENIME</h2>
+                <p className="font-mono-custom text-sm text-white/80 leading-relaxed">
+                  {t('about.description')}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Credits */}
-        <div className="bg-[#111] rounded-3xl p-6">
-          <h2 className="text-white font-medium mb-4">Credits</h2>
-          <div className="space-y-3">
-            <a
-              href="https://trace.moe"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-[#1a1a1a] hover:bg-[#222] transition-colors group"
-            >
-              <div>
-                <p className="text-white text-sm font-medium">trace.moe</p>
-                <p className="text-[#666] text-xs">Anime scene search engine</p>
-              </div>
-              <ExternalLink size={14} className="text-[#666] group-hover:text-[#FF6B50] transition-colors" />
-            </a>
-            <a
-              href="https://anilist.co"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between p-3 rounded-xl bg-[#1a1a1a] hover:bg-[#222] transition-colors group"
-            >
-              <div>
-                <p className="text-white text-sm font-medium">AniList</p>
-                <p className="text-[#666] text-xs">Anime tracking and metadata</p>
-              </div>
-              <ExternalLink size={14} className="text-[#666] group-hover:text-[#FF6B50] transition-colors" />
-            </a>
+          {/* Credits */}
+          <div className="border-brutal-white p-6">
+            <h2 className="font-display text-xl mb-6">CREDITS</h2>
+            <div className="space-y-3">
+              <a
+                href="https://trace.moe"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 border-brutal-white hover:bg-white hover:text-black transition-all group"
+              >
+                <div>
+                  <p className="font-display text-sm">TRACE.MOE</p>
+                  <p className="font-mono-custom text-[10px] text-white/60 group-hover:text-black/60">ANIME SCENE SEARCH ENGINE</p>
+                </div>
+                <ExternalLink size={16} className="text-white/60 group-hover:text-black" />
+              </a>
+              <a
+                href="https://anilist.co"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 border-brutal-white hover:bg-white hover:text-black transition-all group"
+              >
+                <div>
+                  <p className="font-display text-sm">ANILIST</p>
+                  <p className="font-mono-custom text-[10px] text-white/60 group-hover:text-black/60">ANIME TRACKING AND METADATA</p>
+                </div>
+                <ExternalLink size={16} className="text-white/60 group-hover:text-black" />
+              </a>
+            </div>
+            <p className="font-mono-custom text-[10px] text-white/40 mt-4">{t('about.notAffiliated')}</p>
           </div>
-          <p className="text-[#666] text-xs mt-4">{t('about.notAffiliated')}</p>
-        </div>
 
-        {/* Privacy */}
-        <div className="bg-[#111] rounded-3xl p-6">
-          <div className="flex items-start gap-3">
-            <Shield size={20} className="text-green-400 mt-0.5 shrink-0" />
-            <div>
-              <h2 className="text-white font-medium mb-2">Privacy</h2>
-              <p className="text-[#888] text-sm leading-relaxed">{t('about.privacy')}</p>
+          {/* Privacy */}
+          <div className="border-brutal-white p-6">
+            <div className="flex items-start gap-4">
+              <Shield size={24} className="text-green-400 mt-1 shrink-0" />
+              <div>
+                <h2 className="font-display text-xl mb-4">PRIVACY</h2>
+                <p className="font-mono-custom text-sm text-white/80 leading-relaxed">
+                  {t('about.privacy')}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Version */}
-        <div className="text-center pt-4">
-          <p className="text-[#444] text-xs">Version 1.0</p>
-          <p className="text-[#333] text-xs mt-1">Built with React, TypeScript, and Tailwind CSS</p>
+          {/* Version */}
+          <div className="text-center pt-8 border-t border-white/20">
+            <p className="font-mono-custom text-xs text-white/40">VERSION 1.0</p>
+            <p className="font-mono-custom text-[10px] text-white/20 mt-1">
+              BUILT WITH REACT + TYPESCRIPT + TAILWIND
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useI18n } from '../lib/i18n';
 import { getRecentSearches, getLifetimeSearchCount, getAnimeCache } from '../lib/db';
-import type { SearchRecord, AnimeCacheRecord } from '../lib/types';
 import { BarChart3, TrendingUp, Hash } from 'lucide-react';
 
 export function Statistics() {
@@ -11,9 +10,7 @@ export function Statistics() {
   const [topGenres, setTopGenres] = useState<{ genre: string; count: number }[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadStats();
-  }, []);
+  useEffect(() => { loadStats(); }, []);
 
   const loadStats = async () => {
     setLoading(true);
@@ -22,136 +19,165 @@ export function Statistics() {
 
     const searches = await getRecentSearches(50);
 
-    // Top anime
     const animeCounts: Record<number, { title: string; count: number }> = {};
     for (const s of searches) {
       if (s.topAnilistId) {
-        const title = s.top?.title.romaji || s.top?.title.english || s.top?.title.native || 'Unknown';
-        if (!animeCounts[s.topAnilistId]) {
-          animeCounts[s.topAnilistId] = { title, count: 0 };
-        }
+        const title = s.top?.title.romaji || s.top?.title.english || s.top?.title.native || 'UNKNOWN';
+        if (!animeCounts[s.topAnilistId]) animeCounts[s.topAnilistId] = { title, count: 0 };
         animeCounts[s.topAnilistId].count++;
       }
     }
-    const topAnimeList = Object.entries(animeCounts)
-      .map(([id, data]) => ({ anilistId: parseInt(id), ...data }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 10);
-    setTopAnime(topAnimeList);
+    setTopAnime(
+      Object.entries(animeCounts)
+        .map(([id, data]) => ({ anilistId: parseInt(id), ...data }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10)
+    );
 
-    // Top genres (from cached anime details)
     const genreCounts: Record<string, number> = {};
     for (const s of searches) {
       if (s.topAnilistId) {
         const cached = await getAnimeCache(s.topAnilistId);
         if (cached?.genres) {
-          for (const genre of cached.genres) {
-            genreCounts[genre] = (genreCounts[genre] || 0) + 1;
-          }
+          for (const genre of cached.genres) genreCounts[genre] = (genreCounts[genre] || 0) + 1;
         }
       }
     }
-    const topGenresList = Object.entries(genreCounts)
-      .map(([genre, count]) => ({ genre, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 10);
-    setTopGenres(topGenresList);
+    setTopGenres(
+      Object.entries(genreCounts)
+        .map(([genre, count]) => ({ genre, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10)
+    );
 
     setLoading(false);
   };
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-2 h-2 rounded-full bg-[#FF6B50] pulse-dot" />
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight-custom">{t('stats.title')}</h1>
-        </div>
-        <div className="space-y-4">
-          {[1, 2, 3].map(i => (
-            <div key={i} className="bg-[#111] rounded-3xl p-5">
-              <div className="skeleton h-5 w-1/3 rounded mb-4" />
-              <div className="skeleton h-32 w-full rounded-xl" />
+      <div className="min-h-screen bg-[#FF4D00]">
+        <section className="px-4 sm:px-8 pt-32 pb-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-3 h-3 bg-black" />
+              <span className="font-mono-custom text-xs font-bold uppercase tracking-widest">// ANALYTICS</span>
             </div>
-          ))}
-        </div>
+            <h1 className="font-display text-black mb-8" style={{ fontSize: 'clamp(3rem, 12vw, 12rem)' }}>
+              STATISTICS
+            </h1>
+            <div className="border-t-2 border-black" />
+          </div>
+        </section>
+        <section className="bg-black text-white px-4 sm:px-8 py-12">
+          <div className="max-w-3xl mx-auto space-y-4">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="border-brutal-white p-6">
+                <div className="skeleton-brutal h-6 w-1/3 mb-4" />
+                <div className="skeleton-brutal h-32 w-full" />
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-2 h-2 rounded-full bg-[#FF6B50] pulse-dot" />
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight-custom">{t('stats.title')}</h1>
-      </div>
-
-      {totalSearches === 0 ? (
-        <div className="text-center py-16">
-          <BarChart3 size={48} className="mx-auto text-[#333] mb-4" />
-          <p className="text-[#666]">{t('stats.empty')}</p>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {/* Total Searches */}
-          <div className="bg-[#111] rounded-3xl p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <Hash size={18} className="text-[#FF6B50]" />
-              <h2 className="text-white font-medium">{t('stats.totalSearches')}</h2>
-            </div>
-            <p className="text-4xl font-bold text-white">{totalSearches}</p>
+    <div className="min-h-screen bg-[#FF4D00]">
+      {/* Header */}
+      <section className="px-4 sm:px-8 pt-32 pb-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-3 h-3 bg-black" />
+            <span className="font-mono-custom text-xs font-bold uppercase tracking-widest">// ANALYTICS</span>
           </div>
+          <h1
+            className="font-display text-black mb-8"
+            style={{ fontSize: 'clamp(3rem, 12vw, 12rem)' }}
+          >
+            STATISTICS
+          </h1>
+          <div className="border-t-2 border-black" />
+        </div>
+      </section>
 
-          {/* Top Anime */}
-          {topAnime.length > 0 && (
-            <div className="bg-[#111] rounded-3xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <TrendingUp size={18} className="text-[#FF6B50]" />
-                <h2 className="text-white font-medium">{t('stats.topAnime')}</h2>
-              </div>
-              <div className="space-y-3">
-                {topAnime.map((anime, i) => (
-                  <div key={anime.anilistId} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <span className="text-[#666] text-sm w-6">{i + 1}.</span>
-                      <a
-                        href={`https://anilist.co/anime/${anime.anilistId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-white text-sm truncate hover:text-[#FF6B50] transition-colors"
-                      >
-                        {anime.title}
-                      </a>
-                    </div>
-                    <span className="text-[#888] text-sm shrink-0 ml-2">{anime.count}×</span>
-                  </div>
-                ))}
-              </div>
+      {/* Content */}
+      <section className="bg-black text-white px-4 sm:px-8 py-12">
+        <div className="max-w-3xl mx-auto">
+          {totalSearches === 0 ? (
+            <div className="text-center py-24">
+              <BarChart3 size={48} className="mx-auto text-white/20 mb-4" />
+              <p className="font-mono-custom text-sm text-white/40">{t('stats.empty')}</p>
             </div>
-          )}
+          ) : (
+            <div className="space-y-8">
+              {/* Total Searches */}
+              <div className="border-brutal-white p-8 text-center">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Hash size={20} className="text-[#FF4D00]" />
+                  <h2 className="font-display text-lg">{t('stats.totalSearches')}</h2>
+                </div>
+                <p className="font-display text-6xl md:text-8xl text-[#FF4D00]">{totalSearches}</p>
+              </div>
 
-          {/* Top Genres */}
-          {topGenres.length > 0 && (
-            <div className="bg-[#111] rounded-3xl p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <BarChart3 size={18} className="text-[#FF6B50]" />
-                <h2 className="text-white font-medium">{t('stats.topGenres')}</h2>
-              </div>
-              <p className="text-[#666] text-xs mb-4">Based on anime with loaded AniList details.</p>
-              <div className="flex flex-wrap gap-2">
-                {topGenres.map((item) => (
-                  <span
-                    key={item.genre}
-                    className="px-3 py-1.5 rounded-full bg-[#1a1a1a] text-[#888] text-sm"
-                  >
-                    {item.genre} <span className="text-[#FF6B50]">({item.count})</span>
-                  </span>
-                ))}
-              </div>
+              {/* Top Anime */}
+              {topAnime.length > 0 && (
+                <div className="border-brutal-white p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <TrendingUp size={20} className="text-[#FF4D00]" />
+                    <h2 className="font-display text-lg">{t('stats.topAnime')}</h2>
+                  </div>
+                  <div className="space-y-0">
+                    {topAnime.map((anime, i) => (
+                      <div key={anime.anilistId} className="service-item group flex items-center justify-between px-2">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <span className="font-mono-custom text-[#FF4D00] text-xs font-bold w-6">
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          <a
+                            href={`https://anilist.co/anime/${anime.anilistId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-display text-sm truncate hover:text-[#FF4D00] transition-colors service-title"
+                          >
+                            {anime.title}
+                          </a>
+                        </div>
+                        <span className="font-mono-custom text-xs text-white/60 shrink-0 ml-2">
+                          {anime.count}×
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Top Genres */}
+              {topGenres.length > 0 && (
+                <div className="border-brutal-white p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <BarChart3 size={20} className="text-[#FF4D00]" />
+                    <h2 className="font-display text-lg">{t('stats.topGenres')}</h2>
+                  </div>
+                  <p className="font-mono-custom text-[10px] text-white/40 mb-4">
+                    BASED ON ANIME WITH LOADED ANILIST DETAILS
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {topGenres.map((item) => (
+                      <span
+                        key={item.genre}
+                        className="tag-pill border-white/40 text-white/80 hover:border-[#FF4D00] hover:text-[#FF4D00] transition-colors cursor-default"
+                      >
+                        {item.genre.toUpperCase()} ({item.count})
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
-      )}
+      </section>
     </div>
   );
 }

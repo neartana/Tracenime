@@ -410,7 +410,7 @@ export function Home() {
           {/* Main Title */}
           <h1
             className="font-display text-black text-center mb-8"
-            style={{ fontSize: 'clamp(3rem, 16vw, 16rem)' }}
+            style={{ fontSize: 'clamp(2.5rem, 8vw, 8rem)' }}
           >
             /TRACENIME
           </h1>
@@ -657,7 +657,7 @@ export function Home() {
       <section className="bg-black text-white px-4 sm:px-8 py-24 text-center">
         <h2
           className="font-display text-white mb-12"
-          style={{ fontSize: 'clamp(2.5rem, 14vw, 14rem)' }}
+          style={{ fontSize: 'clamp(2.5rem, 8vw, 8rem)' }}
         >
           SEARCH<br />AGAIN.
         </h2>

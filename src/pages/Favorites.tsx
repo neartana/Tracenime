@@ -29,7 +29,7 @@ export function Favorites() {
           </div>
           <h1
             className="font-display text-black mb-8"
-            style={{ fontSize: 'clamp(3rem, 12vw, 12rem)' }}
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 6rem)' }}
           >
             FAVORITES
           </h1>

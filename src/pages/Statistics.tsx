@@ -62,7 +62,7 @@ export function Statistics() {
               <div className="w-3 h-3 bg-black" />
               <span className="font-mono-custom text-xs font-bold uppercase tracking-widest">// ANALYTICS</span>
             </div>
-            <h1 className="font-display text-black mb-8" style={{ fontSize: 'clamp(3rem, 12vw, 12rem)' }}>
+            <h1 className="font-display text-black mb-8" style={{ fontSize: 'clamp(2.5rem, 6vw, 6rem)' }}>
               STATISTICS
             </h1>
             <div className="border-t-2 border-black" />
@@ -93,7 +93,7 @@ export function Statistics() {
           </div>
           <h1
             className="font-display text-black mb-8"
-            style={{ fontSize: 'clamp(3rem, 12vw, 12rem)' }}
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 6rem)' }}
           >
             STATISTICS
           </h1>

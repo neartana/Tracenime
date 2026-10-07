@@ -50,14 +50,14 @@ export function History() {
           {searches.length > 0 && (
             <div className="flex items-center justify-between mb-8">
               <span className="font-mono-custom text-xs text-white/60">
-                {searches.length} ENTRIES
+                {searches.length} {t('misc.entries') || 'ENTRIES'}
               </span>
               <button
                 onClick={() => setShowConfirm(true)}
                 className="btn-brutal text-xs flex items-center gap-2 border-white text-white hover:bg-white hover:text-black"
               >
                 <Trash2 size={12} />
-                CLEAR ALL
+                {t('history.deleteAll')}
               </button>
             </div>
           )}

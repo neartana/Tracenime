@@ -90,7 +90,7 @@ export function Watchlist() {
                     : 'text-white hover:bg-white hover:text-black'
                 }`}
               >
-                {opt.label}
+                {opt.value === 'all' ? t('watchlist.filterAll') : t(`watchlist.${opt.value}`)}
               </button>
             ))}
           </div>

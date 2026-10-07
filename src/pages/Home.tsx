@@ -433,11 +433,6 @@ export function Home() {
             <div className="text-right text-black">
               <span className="uppercase block">FIND ANIME</span>
               <span className="uppercase block">FROM A SCREENSHOT</span>
-              {quota && (
-                <span className="block mt-1 text-black/60">
-                  {quota.remaining} SEARCHES LEFT
-                </span>
-              )}
             </div>
           </div>
         </div>
@@ -465,28 +460,37 @@ export function Home() {
 
           {/* Dropzone / Preview */}
           {!previewUrl ? (
-            <div
-              className={`dropzone-brutal p-8 md:p-16 text-center cursor-pointer ${isDragOver ? 'active' : ''}`}
-              onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
-              onDragLeave={() => setIsDragOver(false)}
-              onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <Upload size={48} className="mx-auto mb-4 text-black" />
-              <p className="font-display text-2xl md:text-3xl mb-2">DROP IMAGE</p>
-              <p className="font-mono-custom text-xs text-black/60">
-                CLICK • PASTE (CTRL+V) • DRAG & DROP
-              </p>
-              <p className="font-mono-custom text-[10px] text-black/40 mt-2">
-                JPEG, PNG, WEBP, GIF • MAX 25MB
-              </p>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-                className="hidden"
-                onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFileSelect(f); }}
-              />
+            <div className="relative">
+              {quota && (
+                <div className="absolute top-0 right-0 z-10">
+                  <div className="border-brutal bg-black text-[#FF4D00] px-3 py-1.5 font-mono-custom text-xs font-bold">
+                    {quota.remaining} SEARCHES LEFT
+                  </div>
+                </div>
+              )}
+              <div
+                className={`dropzone-brutal p-8 md:p-16 text-center cursor-pointer ${isDragOver ? 'active' : ''}`}
+                onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
+                onDragLeave={() => setIsDragOver(false)}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload size={48} className="mx-auto mb-4 text-black" />
+                <p className="font-display text-2xl md:text-3xl mb-2">DROP IMAGE</p>
+                <p className="font-mono-custom text-xs text-black/60">
+                  CLICK • PASTE (CTRL+V) • DRAG & DROP
+                </p>
+                <p className="font-mono-custom text-[10px] text-black/40 mt-2">
+                  JPEG, PNG, WEBP, GIF • MAX 25MB
+                </p>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="hidden"
+                  onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFileSelect(f); }}
+                />
+              </div>
             </div>
           ) : (
             <div className="border-brutal bg-white p-4">

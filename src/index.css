@@ -1,1 +1,188 @@
 @import "tailwindcss";
+
+@theme {
+  --color-bg: #050505;
+  --color-card: #111111;
+  --color-card-hover: #161616;
+  --color-elevated: #1a1a1a;
+  --color-border: #333333;
+  --color-border-subtle: #222222;
+  --color-text-primary: #ebebeb;
+  --color-text-secondary: #888888;
+  --color-text-muted: #666666;
+  --color-accent: #FF6B50;
+  --color-accent-hover: #E55A40;
+  --color-gradient-start: #4F46E5;
+  --color-gradient-end: #7C3AED;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333 #111;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #050505;
+  color: #ebebeb;
+}
+
+::selection {
+  background-color: #FF6B50;
+  color: #000;
+}
+
+.tracking-tight-custom {
+  letter-spacing: -0.05em;
+}
+
+.tracking-wide-custom {
+  letter-spacing: 0.2em;
+}
+
+.glass-nav {
+  background: rgba(17, 17, 17, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradient-panel {
+  background: linear-gradient(135deg, #4F46E5, #7C3AED);
+}
+
+.dropzone-border {
+  border: 2px dashed #333;
+  transition: border-color 0.3s ease;
+}
+
+.dropzone-border:hover,
+.dropzone-border.active {
+  border-color: #FF6B50;
+}
+
+.badge-green {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.badge-yellow {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+}
+
+.badge-red {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.thumbnail-hover {
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: all 0.5s ease;
+}
+
+.thumbnail-hover:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .pulse-dot {
+    animation: none;
+  }
+  .thumbnail-hover {
+    transition: none;
+  }
+}
+
+.card-rounded {
+  border-radius: 2.5rem;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #111 25%, #1a1a1a 50%, #111 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.hero-glow {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 80, 0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.result-card-enter {
+  animation: slide-up 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+.result-card-enter:nth-child(1) { animation-delay: 0ms; }
+.result-card-enter:nth-child(2) { animation-delay: 80ms; }
+.result-card-enter:nth-child(3) { animation-delay: 160ms; }
+.result-card-enter:nth-child(4) { animation-delay: 240ms; }
+.result-card-enter:nth-child(5) { animation-delay: 320ms; }
+.result-card-enter:nth-child(6) { animation-delay: 400ms; }
+.result-card-enter:nth-child(7) { animation-delay: 480ms; }
+.result-card-enter:nth-child(8) { animation-delay: 560ms; }
+.result-card-enter:nth-child(9) { animation-delay: 640ms; }
+.result-card-enter:nth-child(10) { animation-delay: 720ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .result-card-enter {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -1,6 +1,15 @@
 {
-  "name": "sandbox-workspace",
+  "name": "tracenime",
+  "version": "1.0.0",
   "private": true,
+  "description": "Identify anime from screenshots using trace.moe and track your finds with AniList metadata.",
+  "license": "MIT",
+  "author": "Farizh (neartana)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neartana/Tracenime.git"
+  },
+  "homepage": "https://github.com/neartana/Tracenime#readme",
   "type": "module",
   "scripts": {
     "dev": "vite",

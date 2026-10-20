@@ -1,4 +1,8 @@
-# Tracenime
+<p align="center">
+  <img src="assets/logo.webp" width="160" alt="Tracenime logo">
+</p>
+
+<h1 align="center">Tracenime</h1>
 
 Identify anime from screenshots using trace.moe and track your finds with AniList metadata. A modern web app with a brutalist "Kinetic Orange" design aesthetic.
 

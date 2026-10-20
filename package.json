@@ -4,7 +4,7 @@
   "private": true,
   "description": "Identify anime from screenshots using trace.moe and track your finds with AniList metadata.",
   "license": "MIT",
-  "author": "Farizh (neartana)",
+  "author": "neartana",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neartana/Tracenime.git"
